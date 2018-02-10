@@ -52,6 +52,7 @@ training/wordlist2dawg
 *.patch
 
 # ignore compilation files
+build/*
 */.deps/*
 */.libs/*
 *.lo
@@ -73,4 +74,9 @@ kernel*.bin
 
 # build dirs
 /build*
+/cppan
+/.cppan
 /win*
+*.dll
+*.exe
+*.lnk

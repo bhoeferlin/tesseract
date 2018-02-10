@@ -4,9 +4,12 @@ ACLOCAL_AMFLAGS = -I m4
 if ENABLE_TRAINING
 TRAINING_SUBDIR = training
 training:
+	$(MAKE)
 	@cd "$(top_builddir)/training" && $(MAKE)
 training-install:
 	@cd "$(top_builddir)/training" && $(MAKE) install
+training-uninstall:
+	@cd "$(top_builddir)/training" && $(MAKE) uninstall
 clean-local:
 	@cd "$(top_builddir)/training" && $(MAKE) clean
 else
@@ -14,7 +17,7 @@ training:
 	@echo "Need to reconfigure project, so there are no errors"
 endif
 
-.PHONY: install-langs ScrollView.jar install-jars $(TRAINING_SUBDIR)
+.PHONY: install-langs ScrollView.jar install-jars training
 
 SUBDIRS = ccutil viewer cutil opencl ccstruct dict classify wordrec textord
 if !NO_CUBE_BUILD
@@ -22,7 +25,7 @@ if !NO_CUBE_BUILD
 endif
 SUBDIRS += ccmain api . tessdata doc
 
-EXTRA_DIST = ReleaseNotes README.md\
+EXTRA_DIST = README.md\
 	aclocal.m4 config configure.ac autogen.sh contrib \
 	tesseract.pc.in $(TRAINING_SUBDIR) java doc testing
 
@@ -35,14 +38,14 @@ dist-hook:
 # Need to remove .svn directories from directories
 # added using EXTRA_DIST. $(distdir)/tessdata would in
 # theory suffice.
-	rm -rf `find $(distdir) -name .svn`
-	rm -rf `find $(distdir) -name .git`
-	rm -rf `find $(distdir) -name .deps`
-	rm -rf `find $(distdir) -name .libs`
-	rm -rf `find $(distdir) -name *.o`
-	rm -rf `find $(distdir) -name *.lo`
-	rm -rf `find $(distdir) -name *.la`
-	rm -rf `find $(distdir)/training -executable -type f`
+	rm -rf $(find $(distdir) -name .svn)
+	rm -rf $(find $(distdir) -name .git)
+	rm -rf $(find $(distdir) -name .deps)
+	rm -rf $(find $(distdir) -name .libs)
+	rm -rf $(find $(distdir) -name *.o)
+	rm -rf $(find $(distdir) -name *.lo)
+	rm -rf $(find $(distdir) -name *.la)
+	rm -rf $(find $(distdir)/training -executable -type f)
 	rm -rf $(distdir)/doc/html/*
 
 ScrollView.jar:
